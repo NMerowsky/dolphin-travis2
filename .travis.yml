@@ -72,6 +72,7 @@ script:
   #	RSEM
   - travis_wait 35 python dolphin_wrapper.py -r 6 -c Travis
   - tree /home/travis/build/testrun3
+  - sudo cat /home/travis/build/testrun3/tmp/logs/*
 
   #	additional ajax
   #- phpunit unitTesting/ajax/tablegenerator_unittest.php
