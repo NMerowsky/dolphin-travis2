@@ -74,11 +74,8 @@ script:
   - sudo ../unitTesting/run_insertion.sh
 
   #	RSEM
-  - travis_wait 35 time python dolphin_wrapper.py -r 6 -c Travis
+  - travis_wait 30 time python dolphin_wrapper.py -r 6 -c Travis
   - tree /home/travis/build/testrun3
-  - sudo ls -lash /home/travis/build/testrun3/rsem/pipe.rsem.example_sample_1/*
-  - sudo ls -lash /home/travis/build/testrun3/rsem/pipe.rsem.example_sample_1/*/*
-  - sudo cat /home/travis/build/testrun3/tmp/logs/*
 
   #	additional ajax
   #- phpunit unitTesting/ajax/tablegenerator_unittest.php
