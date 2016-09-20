@@ -13,8 +13,6 @@ services:
   - mysql
 
 before_install:
-  - sudo usermod -a -G www-data travis
-  - sudo usermod -a -G travis www-data
   - sudo apt-get update
   - sudo apt-get -y install aptitude
   - sudo apt-get -y install apache2 libapache2-mod-php5 php5-mysqlnd php5-gd php-pear php5-curl lynx-cur libxml2-dev software-properties-common tree perl
@@ -67,11 +65,11 @@ before_script:
 
 script:
   #	ajax - initial mapping
-  
   - phpunit unitTesting/ngsimport_unittest.php
   - phpunit unitTesting/ajax/ngsalterdb_unittest.php
   - sudo mysql --user=bioinfo --password=bioinfo2013 biocore < db/travis.sql
-  #	Run workflow
+  
+  #	Run Import
   - cd scripts
   - travis_wait 15 python dolphin_wrapper.py -r 4 -c Travis
   - sudo ../unitTesting/run_insertion.sh
@@ -79,27 +77,6 @@ script:
   #	RSEM
   - travis_wait 30 python dolphin_wrapper.py -r 6 -c Travis
   - tree /home/travis/build/testrun3
-
-  #	additional ajax
-  #- phpunit unitTesting/ajax/tablegenerator_unittest.php
-  #- phpunit unitTesting/ajax/statquerydb_unittest.php
-  #- phpunit unitTesting/ajax/sessionrequests_unittest.php
-  #- phpunit unitTesting/ajax/profiledb_unittest.php
-  #- phpunit unitTesting/ajax/ngsquerydb_unittest.php
-  #- phpunit unitTesting/ajax/ngsfastlanedb_unittest.php
-  #- phpunit unitTesting/ajax/ngs_tables_unittest.php
-  #- phpunit unitTesting/ajax/kill_pid_unittest.php
-  #- phpunit unitTesting/ajax/initialmappingdb_unittest.php
-  #- phpunit unitTesting/ajax/dolphinfuncs_unittest.php
-  #- phpunit unitTesting/ajax/dataservice_unittest.php
-  #- phpunit unitTesting/ajax/datajobs_unittest.php
-  #- phpunit unitTesting/ajax/dataerrorlogs_unittest.php
-  #- phpunit unitTesting/ajax/dashboardquerydb_unittest.php
-  #- phpunit unitTesting/ajax/browse_edit_unittest.php
-  #- phpunit unitTesting/ajax/admindashboardquerydb_unittest.php
-  #- phpunit unitTesting/ajax/adminstatquerydb_unittest.php
-  #	api
-  #- phpunit unitTesting/api/funcs_unittest.php
 
 after_script:
   - mysql -e "show databases;" -uroot
@@ -129,4 +106,3 @@ after_script:
   - mysql -e "use biocore; SELECT * FROM service_run" -uroot
   - mysql -e "use biocore; SELECT * FROM workflows" -uroot
   - mysql -e "use biocore; SELECT * FROM workflow_run" -uroot
-  
