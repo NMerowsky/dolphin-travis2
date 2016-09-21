@@ -68,12 +68,10 @@ script:
   - phpunit unitTesting/ngsimport_unittest.php
   - phpunit unitTesting/ajax/ngsalterdb_unittest.php
   - sudo mysql --user=bioinfo --password=bioinfo2013 biocore < db/travis.sql
-  
   #	Run Import
   - cd scripts
   - python dolphin_wrapper.py -r 4 -c Travis
   - sudo ../unitTesting/run_insertion.sh
-
   #	RSEM
   - travis_wait 30 python dolphin_wrapper.py -r 6 -c Travis
   - tree /home/travis/build/testrun3
